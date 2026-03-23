@@ -1,0 +1,23 @@
+﻿@page "/colours/listcolours"
+@inherits ColourBasePageClass
+
+<PageTitle>@ColourPlural</PageTitle>
+
+@if (ColoursWithWidgets is null)
+{
+    <LoadingMessageComponent ValueToShow="@ColourPlural" />
+    return;
+}
+
+<a href=@($"/{ColourSingular.ToLower()}/create") class="btn btn-primary">Create @ColourSingular</a>
+
+<br />
+<br />
+
+@if (ColoursWithWidgets.Count == 0)
+{
+    <NoResultsComponent ObjectType="@ColourPlural" />
+    return;
+}
+
+<ColourGridviewComponent Colours="ColoursWithWidgets" />

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Infrastructure/">
+    <File Path="Infrastructure/CreateTables.ps1" />
+    <File Path="Infrastructure/SeedTables.ps1" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="ManufacturerManagerAWS.Application/ManufacturerManagerAWS.Application.csproj" />
+    <Project Path="ManufacturerManagerAWS.DataAccess/ManufacturerManagerAWS.DataAccess.csproj" />
+    <Project Path="ManufacturerManagerAWS.UserInterface/ManufacturerManagerAWS.UserInterface.csproj" />
+  </Folder>
+</Solution>

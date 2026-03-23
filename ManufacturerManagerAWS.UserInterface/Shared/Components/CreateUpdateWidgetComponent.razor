@@ -1,0 +1,38 @@
+﻿<MudCardContent>
+    <MudTextField Label="Name" @bind-Value="@WidgetDisplayModel.Name" AutoFocus OnlyValidateIfDirty="true" />
+    <MudSelect T="string" Label="Manufacturer" @bind-Value="WidgetDisplayModel.ManufacturerId">
+        @foreach (var manufacturerDto in ManufacturerDtos)
+        {
+            <MudSelectItem T="string" Value="@manufacturerDto.ManufacturerId">
+                @manufacturerDto.Name
+            </MudSelectItem>
+        }
+    </MudSelect>
+    <MudSelect T="string" Label="Colour" @bind-Value="WidgetDisplayModel.ColourId">
+        @foreach (var colourDto in ColourDtos)
+        {
+            <MudSelectItem T="string" Value="@colourDto.ColourId">
+                @colourDto.Name
+            </MudSelectItem>
+        }
+    </MudSelect>
+    <MudSelect T="string" Label="Colour Justification" @bind-Value="WidgetDisplayModel.ColourJustificationId">
+        @foreach (var colourJustifiationDto in ColourJustificationDtos)
+        {
+            <MudSelectItem T="string" Value="@colourJustifiationDto.ColourJustificationId">
+                @colourJustifiationDto.Justification
+            </MudSelectItem>
+        }
+    </MudSelect>
+    <MudSelect T="string" Label="Status" @bind-Value="WidgetDisplayModel.StatusId">
+        @foreach (var widgetStatusDto in WidgetStatusDtos)
+        {
+            <MudSelectItem T="string" Value="@widgetStatusDto.WidgetStatusId">
+                @widgetStatusDto.Name
+            </MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField Label="Cost Price" @bind-Value="WidgetDisplayModel.CostPrice" />
+    <MudTextField Label="Retail Price" @bind-Value="WidgetDisplayModel.RetailPrice" />
+    <MudTextField Label="Stock Level" @bind-Value="WidgetDisplayModel.StockLevel" />
+</MudCardContent>

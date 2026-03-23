@@ -1,0 +1,23 @@
+﻿@page "/widgets/listwidgets"
+@inherits WidgetBasePageClass
+
+<PageTitle>@WidgetPlural</PageTitle>
+
+@if (Widgets is null)
+{
+    <LoadingMessageComponent ValueToShow="@WidgetPlural" />
+    return;
+}
+
+<a href=@($"/{WidgetSingular.ToLower()}/create") class="btn btn-primary">Create @WidgetSingular</a>
+
+<br />
+<br />
+
+@if (Widgets.Count == 0)
+{
+    <NoResultsComponent ObjectType="@WidgetPlural" />
+    return;
+}
+
+<WidgetGridviewComponent Widgets="Widgets" />

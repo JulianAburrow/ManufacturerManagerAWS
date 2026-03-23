@@ -1,0 +1,38 @@
+﻿@page "/colour/delete/{ColourId}"
+@inherits ColourBasePageClass
+
+<PageTitle>Delete @ColourSingular</PageTitle>
+
+@if (Colour is null)
+{
+    <LoadingMessageComponent ValueToShow="@ColourSingular" />
+    return;
+}
+
+@if (PreventDeleting)
+{
+    <MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">
+        <h4>This @ColourSingular cannot be deleted as it is in use.</h4>
+    </MudAlert>
+    <br />
+    <a href=@($"/{ColourPlural.ToLower()}/list{ColourPlural.ToLower()}") class="btn btn-primary">Back to list</a>
+    return;
+}
+
+<MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">
+    <h4>Are you sure you want to delete this @ColourSingular.ToLower()?</h4>
+</MudAlert>
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <ViewDeleteColourComponent ColourDetails="Colour" />
+            <MudCardActions>
+                <button class="btn btn-danger" @onclick="DeleteColourAsync">Delete</button>
+                &nbsp;
+                <a class="btn btn-primary" href=@($"/{ColourPlural.ToLower()}/list{ColourPlural.ToLower()}")>Cancel</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+   

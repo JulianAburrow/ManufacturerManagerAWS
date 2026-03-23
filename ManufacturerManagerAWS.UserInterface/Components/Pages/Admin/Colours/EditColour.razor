@@ -1,0 +1,28 @@
+﻿@page "/colour/edit/{ColourId}"
+@inherits ColourBasePageClass
+
+<PageTitle>Edit @ColourSingular</PageTitle>
+
+@if (ColourDisplayModel is null)
+{
+    <LoadingMessageComponent ValueToShow="@ColourSingular" />
+    return;
+}
+
+<EditForm Model="@ColourDisplayModel" OnValidSubmit="UpdateColourAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CreateUpdateColourComponent ColourDisplayModel="@ColourDisplayModel" />
+                <MudCardActions>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    &nbsp;
+                    <a class="btn btn-primary" href=@($"/{ColourPlural.ToLower()}/list{ColourPlural.ToLower()}")>Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

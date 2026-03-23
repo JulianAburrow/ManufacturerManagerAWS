@@ -1,0 +1,23 @@
+﻿@page "/manufacturer/view/{ManufacturerId}"
+@inherits ManufacturerBasePageClass
+
+@if (Manufacturer is null)
+{
+    <LoadingMessageComponent ValueToShow="@ManufacturerSingular" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <ViewDeleteManufacturerComponent ManufacturerDetails="Manufacturer" />
+            <MudCardActions>
+                <a href=@($"/{ManufacturerSingular.ToLower()}/edit/{Uri.EscapeDataString(Manufacturer.ManufacturerId)}") class="btn btn-primary">Edit</a>
+                &nbsp;
+                <a href=@($"/{ManufacturerPlural.ToLower()}/list{ManufacturerPlural.ToLower()}") class="btn btn-primary">Back to list</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<WidgetGridviewComponent Widgets="Manufacturer.Widgets" />

@@ -1,0 +1,23 @@
+﻿@page "/widget/view/{WidgetId}"
+@inherits WidgetBasePageClass
+
+<PageTitle>View @WidgetSingular</PageTitle>
+
+@if (Widget is null)
+{
+    <LoadingMessageComponent ValueToShow="@WidgetSingular" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <ViewDeleteWidgetComponent WidgetDetails="Widget" />
+        </MudCard>
+        <MudCardActions>
+            <a href=@($"/{WidgetSingular.ToLower()}/edit/{Uri.EscapeDataString(Widget.WidgetId)}") class="btn btn-primary">Edit</a>
+            &nbsp;
+            <a href=@($"/{WidgetPlural.ToLower()}/list{WidgetPlural.ToLower()}") class="btn btn-primary">Back to list</a>
+        </MudCardActions>
+    </MudItem>
+</MudGrid>

@@ -1,0 +1,37 @@
+﻿@page "/colour/view/{ColourId}"
+@inherits ColourBasePageClass
+
+@if (Colour is null)
+{
+    <LoadingMessageComponent ValueToShow="@ColourSingular" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <MudCard>
+            <ViewDeleteColourComponent ColourDetails="Colour" />
+            <MudCardActions>
+                <a href=@($"/{ColourSingular.ToLower()}/edit/{Uri.EscapeDataString(Colour.ColourId)}") class="btn btn-primary">Edit</a>
+                @if (!PreventDeleting)
+                {
+                    @:&nbsp;
+                    <a href=@($"/{ColourSingular}/delete/{Uri.EscapeDataString(Colour.ColourId)}") class="btn btn-danger">Delete</a>
+                }
+                &nbsp;
+                <a href=@($"{ColourPlural.ToLower()}/list{ColourPlural.ToLower()}") class="btn btn-primary">Back to list</a>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<br />
+<br />
+
+@if (!Colour.Widgets.Any())
+{
+    <NoResultsComponent ObjectType="widgets" />
+    return;
+}
+
+<h3>@Colour.Widgets.Count @(Colour.Widgets.Count == 1 ? "widget" : "widgets")</h3>

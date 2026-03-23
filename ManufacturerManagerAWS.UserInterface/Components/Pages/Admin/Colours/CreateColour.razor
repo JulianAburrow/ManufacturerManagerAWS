@@ -1,0 +1,22 @@
+﻿@page "/colour/create"
+@inherits ColourBasePageClass
+
+<PageTitle>Create @ColourSingular</PageTitle>
+
+<EditForm Model="@ColourDisplayModel" OnValidSubmit="CreateColourAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CreateUpdateColourComponent ColourDisplayModel="@ColourDisplayModel" />
+                <MudCardActions>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    &nbsp;
+                    <a href=@($"/{ColourPlural.ToLower()}/list{ColourPlural.ToLower()}") class="btn btn-primary">Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

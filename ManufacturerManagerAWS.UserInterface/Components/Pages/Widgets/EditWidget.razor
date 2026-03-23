@@ -1,0 +1,36 @@
+﻿@page "/widget/edit/{WidgetId}"
+@inherits WidgetBasePageClass
+
+
+<PageTitle>Edit @WidgetSingular</PageTitle>
+
+@if (WidgetDisplayModel is null ||
+    Manufacturers is null ||
+    Colours is null ||
+    ColourJustifications is null ||
+    WidgetStatuses is null)
+{
+    <LoadingMessageComponent ValueToShow="@WidgetSingular" />
+    return;
+}
+
+<EditForm Model="@WidgetDisplayModel" OnValidSubmit="UpdateWidgetAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <CreateUpdateWidgetComponent
+                WidgetDisplayModel="@WidgetDisplayModel"
+                ManufacturerDtos="Manufacturers"
+                ColourDtos="Colours"
+                ColourJustificationDtos="ColourJustifications"
+                WidgetStatusDtos="WidgetStatuses" />
+            <MudCardActions>
+                <button type="submit" class="btn btn-primary">Update</button>
+                &nbsp;
+                <a class="btn btn-primary" href=@($"/{WidgetPlural.ToLower()}/list{WidgetPlural.ToLower()}")>Cancel</a>
+            </MudCardActions>
+        </MudItem>
+    </MudGrid>
+</EditForm>

@@ -1,0 +1,9 @@
+﻿global using ManufacturerManagerAWS.Application.DTOs.Colours;
+global using ManufacturerManagerAWS.Application.DTOs.Manufacturers;
+global using ManufacturerManagerAWS.Application.DTOs.ManufacturerStatus;
+global using ManufacturerManagerAWS.Application.DTOs.Widgets;
+global using ManufacturerManagerAWS.Application.DTOs.WidgetStatus;
+global using ManufacturerManagerAWS.Application.Mapping;
+global using ManufacturerManagerAWS.DataAccess.Interfaces;
+global using ManufacturerManagerAWS.DataAccess.Models;
+global using System.ComponentModel.DataAnnotations;

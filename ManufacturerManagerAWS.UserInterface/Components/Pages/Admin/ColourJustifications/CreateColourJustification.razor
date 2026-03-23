@@ -1,0 +1,22 @@
+﻿@page "/colourjustification/create"
+@inherits ColourJustificationBasePageClass
+
+<PageTitle>Create @ColourJustificationSingular</PageTitle>
+
+<EditForm Model="@ColourJustificationDisplayModel" OnValidSubmit="CreateColourJustificationAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CreateUpdateColourJustificationComponent ColourJustificationDisplayModel="@ColourJustificationDisplayModel" />
+                <MudCardActions>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    &nbsp;
+                    <a href=@($"/{ColourJustificationPlural.ToLower()}/list{ColourJustificationPlural.ToLower()}") class="btn btn-primary">Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

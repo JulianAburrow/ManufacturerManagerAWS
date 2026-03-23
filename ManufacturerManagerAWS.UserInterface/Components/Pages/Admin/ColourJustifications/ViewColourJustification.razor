@@ -1,0 +1,38 @@
+﻿@page "/colourjustification/view/{ColourJustificationId}"
+@inherits ColourJustificationBasePageClass
+
+<PageTitle>View @ColourJustificationSingular</PageTitle>
+
+@if (ColourJustification is null)
+{
+    <LoadingMessageComponent ValueToShow="@ColourJustificationSingular" />
+    return;
+}
+
+<MudGrid>
+    <MudItem sm="7">
+        <ViewDeleteColourJustificationComponent ColourJustificationDetails="ColourJustification" />
+        <MudCardActions>
+            <a href=@($"/{ColourJustificationSingular.ToLower()}/edit/{Uri.EscapeDataString(ColourJustification.ColourJustificationId)}") class="btn btn-primary">Edit</a>
+            @if (!PreventDeleting)
+            {
+                @:&nbsp;
+                <a href=@($"/{ColourJustificationSingular}/delete/{Uri.EscapeDataString(ColourJustification.ColourJustificationId)}") class="btn btn-danger">Delete</a>
+            }
+            &nbsp;
+            <a href=@($"{ColourJustificationPlural.ToLower()}/list{ColourJustificationPlural.ToLower()}") class="btn btn-primary">Back to list</a>
+        </MudCardActions>
+    </MudItem>
+</MudGrid>
+
+
+<br />
+<br />
+
+@if (!ColourJustification.Widgets.Any())
+{
+    <NoResultsComponent ObjectType="widgets" />
+    return;
+}
+
+<h3>@ColourJustification.Widgets.Count @(ColourJustification.Widgets.Count == 1 ? "widget" : "widgets")</h3>

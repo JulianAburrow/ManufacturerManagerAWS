@@ -1,0 +1,34 @@
+﻿@page "/widget/create"
+@inherits WidgetBasePageClass
+
+<PageTitle>@WidgetPlural</PageTitle>
+
+@if (Manufacturers is null ||
+    Colours is null ||
+    ColourJustifications is null ||
+    WidgetStatuses is null)
+{
+    <LoadingMessageComponent ValueToShow="@WidgetSingular" />
+    return;
+}
+
+<EditForm Model="@WidgetDisplayModel" OnValidSubmit="CreateWidgetAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <CreateUpdateWidgetComponent
+                WidgetDisplayModel="WidgetDisplayModel"
+                ManufacturerDtos="Manufacturers"
+                ColourDtos="Colours"
+                ColourJustificationDtos="ColourJustifications"
+                WidgetStatusDtos="WidgetStatuses" />
+            <MudCardActions>
+                <button type="submit" class="btn btn-primary">Create</button>
+                &nbsp;
+                <a href=@($"/{WidgetPlural.ToLower()}/list{WidgetPlural.ToLower()}") class="btn btn-primary">Cancel</a>
+            </MudCardActions>
+        </MudItem>
+    </MudGrid>
+</EditForm>

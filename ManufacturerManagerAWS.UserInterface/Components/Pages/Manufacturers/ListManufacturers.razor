@@ -1,0 +1,23 @@
+﻿@page "/manufacturers/listmanufacturers"
+@inherits ManufacturerBasePageClass
+
+<PageTitle>@ManufacturerPlural</PageTitle>
+
+@if (ManufacturersWithWidgets is null)
+{
+    <LoadingMessageComponent ValueToShow="@ManufacturerPlural" />
+    return;
+}
+
+<a href=@($"/{ManufacturerSingular.ToLower()}/create") class="btn btn-primary">Create @ManufacturerSingular</a>
+
+<br />
+<br />
+
+@if (ManufacturersWithWidgets.Count == 0)
+{
+    <NoResultsComponent ObjectType="@ManufacturerPlural" />
+    return;
+}
+
+<ManufacturerGridviewComponent Manufacturers="ManufacturersWithWidgets" />

@@ -1,0 +1,28 @@
+﻿@page "/manufacturer/create"
+@inherits ManufacturerBasePageClass
+
+<PageTitle>Create @ManufacturerSingular</PageTitle>
+
+@if (ManufacturerStatuses is null)
+{
+    <LoadingMessageComponent ValueToShow="@ManufacturerStatusPlural" />
+    return;
+}
+
+<EditForm Model="@ManufacturerDisplayModel" OnValidSubmit="CreateManufacturerAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <CreateUpdateManufacturerComponent
+                ManufacturerDisplayModel="@ManufacturerDisplayModel"
+                ManufacturerStatusDtos="@ManufacturerStatuses" />
+            <MudCardActions>
+                <button type="submit" class="btn btn-primary">Create</button>
+                &nbsp;
+                <a href="/manufacturers/listmanufacturers" class="btn btn-primary">Cancel</a>
+            </MudCardActions>
+        </MudItem>
+    </MudGrid>
+</EditForm>

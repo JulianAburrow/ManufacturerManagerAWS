@@ -1,0 +1,28 @@
+﻿@page "/manufacturer/edit/{ManufacturerId}"
+@inherits ManufacturerBasePageClass
+
+<PageTitle>Edit @ManufacturerSingular</PageTitle>
+
+@if (ManufacturerDisplayModel is null || ManufacturerStatuses is null)
+{
+    <LoadingMessageComponent ValueToShow="@ManufacturerSingular" />
+    return;
+}
+
+<EditForm Model="@ManufacturerDisplayModel" OnValidSubmit="UpdateManufacturerAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CreateUpdateManufacturerComponent ManufacturerDisplayModel="@ManufacturerDisplayModel" ManufacturerStatusDtos="@ManufacturerStatuses" />
+                <MudCardActions>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    &nbsp;
+                    <a class="btn btn-primary" href=@($"/{ManufacturerPlural.ToLower()}/list{ManufacturerPlural.ToLower()}")>Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>

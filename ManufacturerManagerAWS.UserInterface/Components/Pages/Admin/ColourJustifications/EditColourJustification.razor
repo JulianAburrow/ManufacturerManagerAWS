@@ -1,0 +1,26 @@
+﻿@page "/colourjustification/edit/{ColourJustificationId}"
+@inherits ColourJustificationBasePageClass
+
+@if (ColourJustificationDisplayModel is null)
+{
+    <LoadingMessageComponent ValueToShow="@ColourJustificationSingular" />
+    return;
+}
+
+<EditForm Model="@ColourJustificationDisplayModel" OnValidSubmit="UpdateColourJustificationAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudGrid>
+        <MudItem sm="7">
+            <MudCard>
+                <CreateUpdateColourJustificationComponent ColourJustificationDisplayModel="@ColourJustificationDisplayModel" />
+                <MudCardActions>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    &nbsp;
+                    <a class="btn btn-primary" href=@($"/{ColourJustificationPlural.ToLower()}/list{ColourJustificationPlural.ToLower()}")>Cancel</a>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
