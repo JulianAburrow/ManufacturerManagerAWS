@@ -1,10 +1,9 @@
-﻿using System.Net.NetworkInformation;
-
-namespace ManufacturerManagerAWS.Application.Services.Manufacturer;
+﻿namespace ManufacturerManagerAWS.Application.Services.Manufacturer;
 
 public class ManufacturerService(
     IManufacturerRepository manufacturerRepository,
     IManufacturerStatusRepository manufacturerStatusRepository,
+    ITransactionRepository transactionRepository,
     IWidgetRepository widgetManufacturerRepository,
     IWidgetStatusRepository widgetStatusRepository) : IManufacturerService
 {
@@ -98,25 +97,35 @@ public class ManufacturerService(
     {
         const string Inactive = "inactive";
 
-        var manufacturerStatus = await manufacturerStatusRepository.GetManufacturerStatusAsync(request.StatusId);
+        var transactItems = new List<TransactWriteItem>();
+
+        var manufacturerModel = request.ToModel();
+        transactItems.Add(manufacturerRepository.BuildUpdateTransactItem(manufacturerModel));
+
+        var manufacturerStatus = await manufacturerStatusRepository.GetManufacturerStatusAsync(manufacturerModel.StatusId);
         if (manufacturerStatus?.Name.Equals(Inactive, StringComparison.OrdinalIgnoreCase) == true)
         {
             var inactiveWidgetStatus = await widgetStatusRepository.GetWidgetStatusByName(Inactive);
             if (inactiveWidgetStatus is not null)
             {
-                var manufacturerWidgets = await widgetManufacturerRepository.GetWidgetsByManufacturerAsync(request.ManufacturerId);
+                var manufacturerWidgets = await widgetManufacturerRepository.GetWidgetsByManufacturerAsync(manufacturerModel.ManufacturerId);
 
-                foreach (var manufacturerWidget in manufacturerWidgets)
+                foreach (var widget in manufacturerWidgets)
                 {
-                    manufacturerWidget.StatusId = inactiveWidgetStatus.WidgetStatusId;
-                    await widgetManufacturerRepository.UpdateWidgetAsync(manufacturerWidget);
+                    widget.StatusId = inactiveWidgetStatus.WidgetStatusId;
+
+                    transactItems.Add(widgetManufacturerRepository.BuildUpdateTransactItem(widget));
                 }
             }
-
         }
 
-        var model = request.ToModel();
-        await manufacturerRepository.UpdateManufacturerAsync(model);
-        return model.ToDto();
+        var requestItems = new TransactWriteItemsRequest
+        {
+            TransactItems = transactItems,
+        };
+
+        await transactionRepository.ExecuteTransactionAsync(transactItems);
+
+        return manufacturerModel.ToDto();
     }
 }

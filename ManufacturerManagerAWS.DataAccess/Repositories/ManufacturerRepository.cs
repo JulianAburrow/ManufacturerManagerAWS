@@ -16,4 +16,35 @@ public class ManufacturerRepository(IDynamoDBContext context) : IManufacturerRep
 
     public Task UpdateManufacturerAsync(ManufacturerModel manufacturer) =>
         context.SaveAsync(manufacturer);
+
+    public TransactWriteItem BuildUpdateTransactItem(ManufacturerModel model)
+    {
+        var key = new Dictionary<string, AttributeValue>
+        {
+            ["ManufacturerId"] = new AttributeValue { S = model.ManufacturerId }
+        };
+
+        var expressionValues = new Dictionary<string, AttributeValue>
+        {
+            [":name"] = new AttributeValue { S = model.Name },
+            [":status"] = new AttributeValue { S = model.StatusId }
+        };
+
+        return new TransactWriteItem
+        {
+            Update = new Update
+            {
+                TableName = "ManufacturerManager_Manufacturer",
+                Key = key,
+                UpdateExpression = "SET #n = :name, #s = :status",
+                ConditionExpression = "attribute_exists(ManufacturerId)",
+                ExpressionAttributeNames = new Dictionary<string, string>
+                {
+                    ["#n"] = "Name",
+                    ["#s"] = "StatusId"
+                },
+                ExpressionAttributeValues = expressionValues
+            }
+        };
+    }
 }

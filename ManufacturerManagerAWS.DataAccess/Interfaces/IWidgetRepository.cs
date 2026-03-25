@@ -27,4 +27,6 @@ public interface IWidgetRepository
     Task<int> GetWidgetCountByManufacturerAsync(string manufacturerId);
 
     Task<int> GetWidgetCountByStatusAsync(string widgetId);
+
+    TransactWriteItem BuildUpdateTransactItem(WidgetModel model);
 }
