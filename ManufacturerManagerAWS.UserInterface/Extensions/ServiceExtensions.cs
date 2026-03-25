@@ -53,6 +53,7 @@ public static class ServiceExtensions
         services.AddTransient<IManufacturerStatusRepository, ManufacturerStatusRepository>();
         services.AddTransient<IManufacturerStatusService, ManufacturerStatusService>();
         services.AddTransient<IManufacturerService, ManufacturerService>();
+        services.AddTransient<ITransactionRepository, TransactionRepository>();
         services.AddTransient<IWidgetRepository, WidgetRepository>();
         services.AddTransient<IWidgetService, WidgetService>();
         services.AddTransient<IWidgetStatusRepository, WidgetStatusRepository>();

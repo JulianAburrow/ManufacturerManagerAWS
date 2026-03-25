@@ -55,4 +55,35 @@ public class WidgetRepository(IDynamoDBContext context) : IWidgetRepository
 
     public Task<List<WidgetModel>> GetWidgetsByManufacturerAsync(string manufacturerId) =>
         ScanWidgetsAsync(nameof(WidgetModel.ManufacturerId), manufacturerId);
+
+    public TransactWriteItem BuildUpdateTransactItem(WidgetModel model)
+    {
+        var key = new Dictionary<string, AttributeValue>
+        {
+            ["WidgetId"] = new AttributeValue { S = model.WidgetId }
+        };
+
+        var expressionValues = new Dictionary<string, AttributeValue>
+        {
+            [":name"] = new AttributeValue { S = model.Name },
+            [":status"] = new AttributeValue { S = model.StatusId }
+        };
+
+        return new TransactWriteItem
+        {
+            Update = new Update
+            {
+                TableName = "ManufacturerManager_Widget",
+                Key = key,
+                UpdateExpression = "SET #n = :name, #s = :status",
+                ConditionExpression = "attribute_exists(WidgetId)",
+                ExpressionAttributeNames = new Dictionary<string, string>
+                {
+                    ["#n"] = "Name",
+                    ["#s"] = "StatusId"
+                },
+                ExpressionAttributeValues = expressionValues
+            }
+        };
+    }
 }

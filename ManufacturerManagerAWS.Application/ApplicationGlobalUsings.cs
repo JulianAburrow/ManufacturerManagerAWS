@@ -1,4 +1,5 @@
-﻿global using ManufacturerManagerAWS.Application.DTOs.Colours;
+﻿global using Amazon.DynamoDBv2.Model;
+global using ManufacturerManagerAWS.Application.DTOs.Colours;
 global using ManufacturerManagerAWS.Application.DTOs.Manufacturers;
 global using ManufacturerManagerAWS.Application.DTOs.ManufacturerStatus;
 global using ManufacturerManagerAWS.Application.DTOs.Widgets;

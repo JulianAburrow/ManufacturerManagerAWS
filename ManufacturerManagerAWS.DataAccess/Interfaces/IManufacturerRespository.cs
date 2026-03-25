@@ -9,4 +9,6 @@ public interface IManufacturerRepository
     Task CreateManufacturerAsync(ManufacturerModel manufacturer);
 
     Task UpdateManufacturerAsync(ManufacturerModel manufacturer);
+
+    TransactWriteItem BuildUpdateTransactItem(ManufacturerModel model);
 }
